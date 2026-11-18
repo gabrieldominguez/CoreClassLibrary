@@ -1,0 +1,2 @@
+namespace CoreClassLibrary.Objects.Graphs;
+

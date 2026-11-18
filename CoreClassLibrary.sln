@@ -1,0 +1,24 @@
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 18
+VisualStudioVersion = 18.4.11612.150
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CoreClassLibrary", "src\CoreClassLibrary\CoreClassLibrary.csproj", "{BA26D456-9A55-406E-B76A-AA388DB069B0}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Debug|x64 = Debug|x64
+		Release|Any CPU = Release|Any CPU
+		Release|x64 = Release|x64
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{BA26D456-9A55-406E-B76A-AA388DB069B0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BA26D456-9A55-406E-B76A-AA388DB069B0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BA26D456-9A55-406E-B76A-AA388DB069B0}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{BA26D456-9A55-406E-B76A-AA388DB069B0}.Debug|x64.Build.0 = Debug|Any CPU
+		{BA26D456-9A55-406E-B76A-AA388DB069B0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BA26D456-9A55-406E-B76A-AA388DB069B0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BA26D456-9A55-406E-B76A-AA388DB069B0}.Release|x64.ActiveCfg = Release|Any CPU
+		{BA26D456-9A55-406E-B76A-AA388DB069B0}.Release|x64.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
