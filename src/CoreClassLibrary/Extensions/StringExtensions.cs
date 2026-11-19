@@ -2,7 +2,7 @@
 #pragma warning disable IDE0046 // Convert to conditional expression
 #pragma warning disable IDE0057 // Use range operator
 
-using Becas1.CoreClassLibrary.RegularExpressions;
+using CoreClassLibrary.RegularExpressions;
 using CoreClassLibrary.Extensions;
 using CoreClassLibrary.Objects.Pooling;
 using System.Buffers;

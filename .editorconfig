@@ -1,0 +1,70 @@
+[*.cs]
+
+# RCS1090: Call 'ConfigureAwait(false)'.
+dotnet_diagnostic.RCS1090.severity = none
+
+# IDE0002: Simplify Member Access
+dotnet_diagnostic.IDE0002.severity = none
+
+# RCS1224: Make method an extension method.
+dotnet_diagnostic.RCS1224.severity = none
+
+# RCS1226: Add paragraph to documentation comment.
+dotnet_diagnostic.RCS1226.severity = none
+
+# IDE0003: Remove qualification
+dotnet_style_qualification_for_event = false:none
+
+# IDE0003: Remove qualification
+dotnet_style_qualification_for_field = false:none
+
+# IDE0003: Remove qualification
+dotnet_style_qualification_for_method = false:none
+
+# IDE0003: Remove qualification
+dotnet_style_qualification_for_property = false:none
+
+# IDE0049: Simplify Names
+dotnet_style_predefined_type_for_locals_parameters_members = true:none
+
+# IDE0049: Simplify Names
+dotnet_style_predefined_type_for_member_access = true:none
+
+# RCS1093: Remove file with no code.
+dotnet_diagnostic.RCS1093.severity = none
+
+# RCS1113: Use 'string.IsNullOrEmpty' method.
+dotnet_diagnostic.RCS1113.severity = none
+
+# IDE0022: Use block body for methods
+csharp_style_expression_bodied_methods = false:none
+
+# IDE0048: Add parentheses for clarity
+dotnet_style_parentheses_in_arithmetic_binary_operators = always_for_clarity:none
+
+# IDE0048: Add parentheses for clarity
+dotnet_style_parentheses_in_other_binary_operators = always_for_clarity:none
+
+# IDE0048: Add parentheses for clarity
+dotnet_style_parentheses_in_other_operators = never_if_unnecessary:none
+
+# IDE0048: Add parentheses for clarity
+dotnet_style_parentheses_in_relational_binary_operators = always_for_clarity:none
+
+# RCS1123: Add parentheses according to operator precedence.
+dotnet_diagnostic.RCS1123.severity = none
+
+# RCS1146: Use conditional access.
+dotnet_diagnostic.RCS1146.severity = silent
+
+# RCS1036: Remove redundant empty line.
+dotnet_diagnostic.RCS1036.severity = none
+
+# IDE0001: Simplify Names
+dotnet_diagnostic.IDE0001.severity = none
+
+
+# IDE0090: Use 'new(...)'
+dotnet_diagnostic.IDE0090.severity = none
+
+

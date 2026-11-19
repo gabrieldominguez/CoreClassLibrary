@@ -2,7 +2,7 @@ using CoreClassLibrary.Extensions;
 using System.Globalization;
 using System.Text.RegularExpressions;
 
-namespace Becas1.CoreClassLibrary.RegularExpressions;
+namespace CoreClassLibrary.RegularExpressions;
 
 /// <summary>
 /// Regular Expressions Extensions

@@ -18,8 +18,8 @@ namespace CoreClassLibrary.Objects;
 /// 
 ///     Assert.Equal("Entity<SampleEntity, long>", TypeNameHelper.GetTypeDisplayName(typeof(Entity<SampleEntity, long>), fullName: false));
 ///     Assert.Equal("Entity`2", typeof(Entity<SampleEntity, long>).Name);
-///     Assert.Equal("Becas1.CoreClassLibrary.Objects.Entity<Becas1.CoreClassLibrary.Objects.SampleEntity, long>", TypeNameHelper.GetTypeDisplayName(typeof(Entity<SampleEntity, long>)));
-///     Assert.StartsWith("Becas1.CoreClassLibrary.Objects.Entity`2[[Becas1.CoreClassLibrary.Objects.SampleEntity, Becas1.CoreClassLibrary, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null],[System.Int64, System.Private.CoreLib, Version=", typeof(Entity<SampleEntity, long>).FullName);
+///     Assert.Equal("CoreClassLibrary.Objects.Entity<CoreClassLibrary.Objects.SampleEntity, long>", TypeNameHelper.GetTypeDisplayName(typeof(Entity<SampleEntity, long>)));
+///     Assert.StartsWith("CoreClassLibrary.Objects.Entity`2[[CoreClassLibrary.Objects.SampleEntity, CoreClassLibrary, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null],[System.Int64, System.Private.CoreLib, Version=", typeof(Entity<SampleEntity, long>).FullName);
 /// </example>
 /// <see cref="https://github.com/dotnet/aspnetcore/blob/main/src/Shared/TypeNameHelper/TypeNameHelper.cs"/>
 public static class TypeNameHelper

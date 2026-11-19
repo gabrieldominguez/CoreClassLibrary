@@ -5,7 +5,7 @@ using System.Globalization;
 using System.Reflection;
 using System.Text.RegularExpressions;
 
-namespace Becas1.CoreClassLibrary.RegularExpressions.Templating;
+namespace CoreClassLibrary.RegularExpressions.Templating;
 
 public static partial class TemplatingExtensions
     {

@@ -1,4 +1,4 @@
-using Becas1.CoreClassLibrary.RegularExpressions;
+using CoreClassLibrary.RegularExpressions;
 
 namespace CoreClassLibrary.Objects.Pipes.Strings.Case;
 

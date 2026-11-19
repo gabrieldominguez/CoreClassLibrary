@@ -1,5 +1,5 @@
 
-using Becas1.CoreClassLibrary.RegularExpressions;
+using CoreClassLibrary.RegularExpressions;
 using System.Text.RegularExpressions;
 
 namespace CoreClassLibrary.RegularExpressions.Lexing.Rules;

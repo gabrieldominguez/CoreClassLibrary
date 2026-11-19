@@ -1,4 +1,4 @@
-using Becas1.CoreClassLibrary.RegularExpressions.Templating;
+using CoreClassLibrary.RegularExpressions.Templating;
 using System.Reflection;
 
 namespace CoreClassLibrary.RegularExpressions.Templating;

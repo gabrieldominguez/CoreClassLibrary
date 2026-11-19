@@ -1,12 +1,12 @@
 // Use IRequestResponseServer, IRequestResponseClient, etc
 
 /*
-using Becas1.CoreClassLibrary.Objects.Pooling;
+using CoreClassLibrary.Objects.Pooling;
 using System.Net;
 using System.Net.Sockets;
 using System.Text;
 
-namespace Becas1.CoreClassLibrary.Networking;
+namespace CoreClassLibrary.Networking;
 
 /// <summary>
 /// Socket Networking Helper Class
