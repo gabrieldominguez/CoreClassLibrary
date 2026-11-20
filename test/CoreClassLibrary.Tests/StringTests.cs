@@ -280,18 +280,12 @@ public class StringTests(ITestOutputHelper outputHelper)
 
 
 	[Theory]
-	[InlineData("0010", 10)]
-	public void IntParse(string input, int expected)
-		{
-		Assert.Equal(expected, int.Parse(input, CultureInfo.InvariantCulture));
-		Assert.Equal(10.20M, decimal.Parse("0010.200", CultureInfo.InvariantCulture));
-		}
-
-	[Theory]
-	[InlineData("0010", 10)]
-	[InlineData("0010.200", 10.2)]
-	public void DecimalParse(string input, decimal expected)
-		=> Assert.Equal(expected, decimal.Parse(input, CultureInfo.InvariantCulture));
+	[InlineData("0010", "10")]
+	[InlineData("0010.200", "10.2")]
+	public void DecimalParse(string input, string expected)
+		=> Assert.Equal(
+			decimal.Parse(expected, CultureInfo.InvariantCulture),
+			decimal.Parse(input, CultureInfo.InvariantCulture));
 
 	[Theory]
 	[InlineData("abcdef", "abc", "xyz", "xyzdef")]
