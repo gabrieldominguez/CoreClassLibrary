@@ -865,5 +865,30 @@ public class StringTests(ITestOutputHelper outputHelper)
 		string output = input.FromConstCase().ToPascalCase();
 		outputHelper.WriteLine(output);
 		Assert.Equal(result, output);
-		}    
-	}
+		}
+
+    [Theory]
+    [InlineData("abcdef", "abc", "xyz", "xyzdef")]
+    [InlineData("ABCdef", "abc", "xyz", "xyzdef")]
+    [InlineData("A*BCdef", "a*bc", "xyz", "xyzdef")]
+    [InlineData("abcdef", "abc", "x*yz", "x*yzdef")]
+    [InlineData("abcdef", "abc", "$", "$def")]
+    [InlineData("abc\\def", "abc", "xyz", "xyz\\def")]
+    [InlineData("for more information.", "more", "less", "for less information.")]
+    [InlineData("for More information.", "more", "less", "for less information.")]
+    [InlineData("for more information.", "More", "less", "for less information.")]
+    [InlineData("for more information.", "MMM", "less", "for more information.")]
+    public void ReplaceIgnoringCase(string input, string search, string replacement, string expected)
+        => Assert.Equal(expected, input.ReplaceIgnoringCase(search, replacement));
+
+    [Theory]
+    [InlineData("for more information.", "more", "less", "for less information.")]
+    [InlineData("for more, information.", "more", "less", "for less, information.")]
+    [InlineData("for (more) information.", "more", "less", "for (less) information.")]
+    [InlineData("formoreinformation.", "more", "less", "formoreinformation.")]
+    [InlineData("for @more information.", "@more", "less", "for @more information.")]
+    [InlineData("for (more) information.", "(more)", "less", "for (less) information.")]
+    [InlineData("for mo-re information.", "mo-re", "less", "for less information.")]
+    public void ReplaceWords(string input, string search, string replacement, string expected)
+        => Assert.Equal(expected, input.ReplaceWords(search, replacement));
+    }
