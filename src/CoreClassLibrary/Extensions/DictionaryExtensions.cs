@@ -241,9 +241,6 @@ namespace CoreClassLibrary.Extensions
         public static bool ContainsAllKeys<TKey, TValue>(this IReadOnlyDictionary<TKey, TValue> dictionary, IEnumerable<TKey> keys)
             => keys.All(dictionary.ContainsKey);
 
-        public static Dictionary<TKey, TValue> ToDictionary<TKey, TValue>(this IEnumerable<(TKey, TValue)> pairs) where TKey : notnull
-            => pairs.ToDictionary(tuple => tuple.Item1, pair => pair.Item2);
-
         /// <summary>
         /// Convierte un IDictionary en un arreglo de DictionaryEntry.
         /// </summary>
@@ -255,9 +252,6 @@ namespace CoreClassLibrary.Extensions
             dic.CopyTo(dicEntries, 0);
             return dicEntries;
             }
-
-        public static ReadOnlyDictionary<TKey, TValue> AsReadOnly<TKey, TValue>(this IDictionary<TKey, TValue> dictionary) where TKey : notnull
-            => new ReadOnlyDictionary<TKey, TValue>(dictionary);
 
         public static void Add<T>(this IDictionary<object, object> dictionary, T item) where T: class
             => dictionary.Add(typeof(T), item);
