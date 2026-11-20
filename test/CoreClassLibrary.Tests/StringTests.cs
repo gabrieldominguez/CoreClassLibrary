@@ -54,6 +54,21 @@ public class StringTests(ITestOutputHelper outputHelper)
         }
 
     [Fact]
+    public void IntegerFormatInterpolation()
+        {
+        int value = 1;
+        Assert.Equal("01", $"{value:00}");
+        }
+
+    [Fact]
+    public void DateFormatInterpolation()
+        {
+        DateOnly value = new DateOnly(2023, 10, 5);
+        Assert.Equal("05/10/2023", $"{value:dd/MM/yyyy}");
+        Assert.Equal("2023-10-05", $"{value:yyyy-MM-dd}");
+        }
+
+    [Fact]
 	public void NewLine()
 		=> Assert.Equal("\r\n", Environment.NewLine);
 
