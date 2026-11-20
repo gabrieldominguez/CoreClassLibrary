@@ -272,4 +272,53 @@ public class TaskTests
             Assert.Contains(n, (int[])[10, 11, 12]);
             }
         }
+
+    [Fact]
+    public async Task CreateCompletedTask_ReturnsDefaultValue()
+        {
+        Task<string?> task = TasksExtensions.CreateCompletedTask<string>();
+
+        Assert.True(task.IsCompletedSuccessfully);
+        Assert.Null(await task);
+        }
+
+    [Fact]
+    public async Task WaitForCancellationAsync_CompletesWhenCanceled()
+        {
+        using CancellationTokenSource source = new();
+
+        Task waitingTask = source.Token.WaitForCancellationAsync();
+        source.Cancel();
+
+        await Assert.ThrowsAsync<TaskCanceledException>(() => waitingTask);
+        }
+
+    [Fact]
+    public async Task WithCancellation_ThrowsWhenCancellationWins()
+        {
+        using CancellationTokenSource source = new();
+        TaskCompletionSource<int> operation = new(TaskCreationOptions.RunContinuationsAsynchronously);
+
+        Task<int> result = operation.Task.WithCancellation(source.Token);
+        source.Cancel();
+
+        await Assert.ThrowsAsync<OperationCanceledException>(() => result);
+        }
+
+    [Fact]
+    public async Task TimeoutAfter_ThrowsWhenTimeoutWins()
+        {
+        TaskCompletionSource<int> operation = new(TaskCreationOptions.RunContinuationsAsynchronously);
+
+        await Assert.ThrowsAsync<OperationCanceledException>(
+            () => operation.Task.TimeoutAfter(TimeSpan.FromMilliseconds(10)));
+        }
+
+    [Fact]
+    public async Task TimeoutAfter_ReturnsCompletedOperation()
+        {
+        Task<int> operation = Task.FromResult(42);
+
+        Assert.Equal(42, await operation.TimeoutAfter(TimeSpan.FromSeconds(1)));
+        }
     }
