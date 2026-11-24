@@ -9,8 +9,8 @@
 
   <ItemGroup>
     <PackageReference Include="CommunityToolkit.HighPerformance" Version="8.4.2" />
-    <PackageReference Include="Microsoft.Extensions.ObjectPool" Version="10.0.13" />
-    <PackageReference Include="Microsoft.IO.RecyclableMemoryStream" Version="3.0.1" />
+    <PackageReference Include="Microsoft.Extensions.ObjectPool" Version="11.0.0" />
+    <PackageReference Include="Microsoft.IO.RecyclableMemoryStream" Version="4.0.1" />
   </ItemGroup>
 
 </Project>
