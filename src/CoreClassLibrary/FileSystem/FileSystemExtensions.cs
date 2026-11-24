@@ -279,7 +279,6 @@ public static class FileSystemExtensions
 
     public static void MoveDirectoryTo(string sourcePath, string destPath) => new DirectoryInfo(sourcePath).MoveTo(destPath);
 
-
     /// <summary>
     /// Copia un archivo o directorio (y su contenido) a una nueva ubicación.
     /// </summary>
@@ -432,36 +431,4 @@ public static class FileSystemExtensions
             fileSystemInfo.Attributes &= ~attribute;
             }
         }
-    
-    /*
-    /// <summary>
-    /// Comprime el archivo en un archivo del mismo nombre mas la extension ".gz"
-    /// </summary>
-    /// <param name="dataFilename">Archivo a comprimir</param>
-    [Obsolete("Rewrite as async without byte[]")]
-    public static void GZipCompress(string dataFilename) => FileSystemExtensions.GZipCompress(dataFilename, String.Concat(dataFilename, ".gz"));
-
-    /// <summary>
-    /// Comprime un archivo y lo guarda en otro.
-    /// </summary>
-    /// <param name="dataFilename">Archivo a comprimir</param>
-    /// <param name="gzFilename">Archivo comprimido</param>
-    [Obsolete("Rewrite as async without byte[]")]
-    public static void GZipCompress(string dataFilename, string gzFilename) => File.WriteAllBytes(gzFilename, File.ReadAllBytes(dataFilename).GZipCompress());
-
-    /// <summary>
-    /// Descomprime el archivo con extension ".gz" en un archivo del mismo nombre sin la extension ".gz"
-    /// </summary>
-    /// <param name="gzFilename">Archivo comprimido</param>
-    [Obsolete("Rewrite as async without byte[]")]
-    public static void GZipDecompress(string gzFilename) => FileSystemExtensions.GZipDecompress(gzFilename, Path.Combine(Path.GetDirectoryName(gzFilename) ?? "", Path.GetFileNameWithoutExtension(gzFilename)));
-
-    /// <summary>
-    /// Descomprime un archivo y lo guarda en otro.
-    /// </summary>
-    /// <param name="gzFilename">Archivo a descomprimir</param>
-    /// <param name="dataFilename">Archivo descomprimido</param>
-    [Obsolete("Rewrite as async without byte[]")]
-    public static void GZipDecompress(string gzFilename, string dataFilename) => File.WriteAllBytes(dataFilename, File.ReadAllBytes(gzFilename).GZipDecompress());
-    */
     }

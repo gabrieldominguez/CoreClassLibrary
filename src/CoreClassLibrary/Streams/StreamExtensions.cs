@@ -153,22 +153,12 @@ public static class StreamExtensions
             }
         }
 
-    public static async Task ZipAsync(ReadOnlyMemory<byte> dataBuffer, Memory<byte> zipBuffer, CancellationToken cancellationToken = default)
+    /*
+    public static async Task<byte[]> ReadAllBytesAsync(this Stream stream, int bufferSize = StreamExtensions.DefaultReadBufferSize, CancellationToken cancellationToken = default)
         {
-        await using GZipStream gZipStream = new GZipStream(zipBuffer.AsStream(), CompressionMode.Compress);
-
-        await gZipStream.WriteAsync(dataBuffer, cancellationToken);
-        await gZipStream.FlushAsync(cancellationToken);
+        await using MemoryStream memoryStream = MemoryStreamManager.Instance.GetStream();
+        await stream.CopyToAsync(memoryStream, bufferSize, cancellationToken);
+        return memoryStream.ToArray();
         }
-
-    public static async Task<int> UnzipAsync(ReadOnlyMemory<byte> zipBuffer, Memory<byte> dataBuffer, CancellationToken cancellationToken = default)
-        {
-        await using GZipStream gZipStream = new GZipStream(zipBuffer.AsStream(), CompressionMode.Decompress);
-
-        int read = await gZipStream.ReadAsync(dataBuffer, cancellationToken);
-
-        await gZipStream.FlushAsync(cancellationToken);
-
-        return read;
-        }
+    */
     }

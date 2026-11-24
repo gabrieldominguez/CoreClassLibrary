@@ -1,11 +1,15 @@
-using Xunit;
-using CoreClassLibrary.Extensions;
 using CoreClassLibrary.Exceptions.Domain;
+using CoreClassLibrary.Extensions;
+using CoreClassLibrary.Objects.Pooling;
+using Xunit;
 
 namespace CoreClassLibrary.Tests;
 
 public static class TestExtensions
     {
+    public static string ToByteArrayLiteral(this IEnumerable<byte> bytes)
+        => String.Concat("{ 0x", bytes.Select(b => b.ToString("x2")).ToDelimitedString(", 0x"), " }");
+
     public static void AssertAndWrite<T>(this ITestOutputHelper output, T? expected, T? actual)
         {
         Assert.Equal(expected, actual);

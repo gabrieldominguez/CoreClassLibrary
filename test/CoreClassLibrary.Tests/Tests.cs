@@ -19,6 +19,9 @@ Wernher von Braun (1912-1977), ingeniero mecánico y aeroespacial alemán.
 
 He aprendido a usar la palabra imposible con la mayor precaución.
 Wernher von Braun (1912-1977), ingeniero mecánico y aeroespacial alemán.
+
+God is in the details.
+Ludwig mies van der Rohe, architect.
 */
 /// <summary>
 /// General Unit Tests
