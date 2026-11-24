@@ -10,7 +10,7 @@ public class RecentlyUsedListTests
     [Fact]
     public void Indexer_ReturnsItemAtPosition()
         {
-        RecentlyUsedList<string> list = new RecentlyUsedList<string>();
+        RecentlyUsedList<string> list = new RecentlyUsedList<string>(new List<string>());
         list.Add("first");
         list.Add("second");
 
@@ -22,7 +22,7 @@ public class RecentlyUsedListTests
     [InlineData(2)]
     public void Indexer_OutOfRange_Throws(int index)
         {
-        RecentlyUsedList<string> list = new RecentlyUsedList<string>();
+        RecentlyUsedList<string> list = new RecentlyUsedList<string>(new List<string>());
         list.Add("item");
 
         Assert.Throws<ArgumentOutOfRangeException>(() => list[index]);
@@ -31,7 +31,7 @@ public class RecentlyUsedListTests
     [Fact]
     public void Contains_ReportsWhetherItemIsPresent()
         {
-        RecentlyUsedList<string> list = new RecentlyUsedList<string>();
+        RecentlyUsedList<string> list = new RecentlyUsedList<string>(new List<string>());
         list.Add("first");
 
         Assert.Contains("first", list);
@@ -41,7 +41,7 @@ public class RecentlyUsedListTests
     [Fact]
     public void Indexer_ReturnsItemsFromMostRecentToLeastRecent()
         {
-        RecentlyUsedList<string> list = new RecentlyUsedList<string>();
+        RecentlyUsedList<string> list = new RecentlyUsedList<string>(new List<string>());
         list.Add("first");
         list.Add("second");
         list.Add("third");
@@ -55,7 +55,7 @@ public class RecentlyUsedListTests
     [Fact]
     public void Add_ExistingItem_MovesItToMostRecentWithoutDuplicating()
         {
-        RecentlyUsedList<string> list = new RecentlyUsedList<string>();
+        RecentlyUsedList<string> list = new RecentlyUsedList<string>(new List<string>());
         list.Add("first");
         list.Add("second");
         list.Add("first");
