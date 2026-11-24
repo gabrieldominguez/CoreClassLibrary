@@ -82,9 +82,41 @@ public class AsyncQueueTests
         using ConcurrentAsyncQueue<int> queue = new();
         queue.Complete();
 
-        Assert.Throws<InvalidOperationException>(() =>
-            {
-            queue.EnqueueAsync(1, TestContext.Current.CancellationToken);
-            });
+        await Assert.ThrowsAsync<InvalidOperationException>(async () =>            
+            await queue.EnqueueAsync(1, TestContext.Current.CancellationToken)
+            );
+        }
+
+    [Fact]
+    public async Task MessageBus_PublishAsync_DeliversToEverySubscriber()
+        {
+        MessageBus<int> messageBus = new([]);
+        IAsyncQueue<int> firstSubscriber = messageBus.Subscribe();
+        IAsyncQueue<int> secondSubscriber = messageBus.Subscribe();
+
+        await messageBus.PublishAsync(1, TestContext.Current.CancellationToken);
+        await messageBus.PublishAsync(2, TestContext.Current.CancellationToken);
+
+        Assert.Equal(1, await firstSubscriber.DequeueAsync(TestContext.Current.CancellationToken));
+        Assert.Equal(2, await firstSubscriber.DequeueAsync(TestContext.Current.CancellationToken));
+        Assert.Equal(1, await secondSubscriber.DequeueAsync(TestContext.Current.CancellationToken));
+        Assert.Equal(2, await secondSubscriber.DequeueAsync(TestContext.Current.CancellationToken));
+
+        messageBus.Complete();
+        }
+
+    [Fact]
+    public async Task MessageBus_Complete_ClosesSubscribersAndRejectsFutureOperations()
+        {
+        MessageBus<int> messageBus = new([]);
+        IAsyncQueue<int> subscriber = messageBus.Subscribe();
+
+        messageBus.Complete();
+
+        await Assert.ThrowsAsync<ChannelClosedException>(
+            () => subscriber.DequeueAsync(TestContext.Current.CancellationToken).AsTask());
+        await Assert.ThrowsAsync<ObjectDisposedException>(
+            () => messageBus.PublishAsync(1, TestContext.Current.CancellationToken).AsTask());
+        Assert.Throws<ObjectDisposedException>(() => messageBus.Subscribe());
+        }
     }
-}
