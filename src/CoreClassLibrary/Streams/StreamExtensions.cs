@@ -1,5 +1,3 @@
-using CommunityToolkit.HighPerformance;
-using System.IO.Compression;
 using CoreClassLibrary.Objects.Pooling;
 
 namespace CoreClassLibrary.Streams;

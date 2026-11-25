@@ -1,4 +1,3 @@
-using CoreClassLibrary.Objects.Pipes;
 using CoreClassLibrary.Objects.Pooling;
 using System.Text.RegularExpressions;
 

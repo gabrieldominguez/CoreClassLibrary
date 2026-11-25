@@ -1,4 +1,3 @@
-using CoreClassLibrary.Objects.Pipes;
 using System.Text.RegularExpressions;
 
 namespace CoreClassLibrary.Objects.Pipes.Strings.Escape;

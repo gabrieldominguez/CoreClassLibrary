@@ -3,10 +3,7 @@ using CoreClassLibrary.Extensions;
 using CoreClassLibrary.Objects;
 using CoreClassLibrary.Objects.Pooling;
 using System.Text;
-using System.Text.RegularExpressions;
 using Xunit;
-using static CoreClassLibrary.Tests.EnumerableTests;
-using static Microsoft.ApplicationInsights.MetricDimensionNames.TelemetryContext;
 
 namespace CoreClassLibrary.Tests;
 

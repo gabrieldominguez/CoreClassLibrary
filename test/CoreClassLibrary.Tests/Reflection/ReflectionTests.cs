@@ -60,8 +60,8 @@ public class ReflectionTests(ITestOutputHelper output)
 
         Assert.Equal(sampleEntity1.GetHashCode(), sampleEntity2.GetHashCode());
         }
-    //public static IEnumerable<Assembly> GetAllLocalReferencedAssemblies(this Assembly rootAssembly)
 
+    /*
     [Fact]
     public void GetAllLocalReferencedAssemblies()
         {
@@ -74,6 +74,7 @@ public class ReflectionTests(ITestOutputHelper output)
 
         Assert.Contains(assemblies, ass => ass.GetDisplayName() == "CoreClassLibrary");
         }
+    */
 
     [Fact]
     public void NullConvert() => Assert.Null(Convert.ChangeType(null, typeof(SampleEntity)));

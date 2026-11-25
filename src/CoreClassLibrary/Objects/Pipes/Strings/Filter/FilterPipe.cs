@@ -1,5 +1,3 @@
-using CoreClassLibrary.Objects.Pipes;
-
 namespace CoreClassLibrary.Objects.Pipes.Strings.Filter;
 
 /// <summary>

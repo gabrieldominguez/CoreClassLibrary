@@ -1,5 +1,3 @@
-using CoreClassLibrary.Exceptions;
-
 namespace CoreClassLibrary.Exceptions.Domain;
 
 public class DomainExceptionMessageDetail: ExceptionMessageDetail

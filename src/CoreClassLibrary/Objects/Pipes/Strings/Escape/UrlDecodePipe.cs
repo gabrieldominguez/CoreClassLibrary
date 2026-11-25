@@ -1,5 +1,4 @@
 using CoreClassLibrary.Extensions;
-using CoreClassLibrary.Objects.Pipes;
 
 namespace CoreClassLibrary.Objects.Pipes.Strings.Escape;
 

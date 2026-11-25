@@ -1,5 +1,4 @@
 using CoreClassLibrary.FileSystem;
-using CoreClassLibrary.Objects.Pipes;
 
 namespace CoreClassLibrary.Objects.Pipes.Strings.GetPath;
 

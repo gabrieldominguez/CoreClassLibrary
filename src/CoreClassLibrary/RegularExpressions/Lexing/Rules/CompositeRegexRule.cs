@@ -1,5 +1,3 @@
-
-using CoreClassLibrary.RegularExpressions;
 using System.Text.RegularExpressions;
 
 namespace CoreClassLibrary.RegularExpressions.Lexing.Rules;
