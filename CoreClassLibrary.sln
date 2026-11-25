@@ -15,6 +15,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CoreClassLibrary.Mathematic
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CoreClassLibrary.Mathematics.Tests", "test\CoreClassLibrary.Mathematics.Tests\CoreClassLibrary.Mathematics.Tests.csproj", "{5935C976-E4F8-D63C-9FF4-E7D3D1D898F8}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CoreClassLibrary.IntegrationTests", "CoreClassLibrary.IntegrationTests\CoreClassLibrary.IntegrationTests.csproj", "{A6C77C0A-D3B5-416E-BC1D-C663D246FB30}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -55,6 +57,14 @@ Global
 		{5935C976-E4F8-D63C-9FF4-E7D3D1D898F8}.Release|Any CPU.Build.0 = Release|Any CPU
 		{5935C976-E4F8-D63C-9FF4-E7D3D1D898F8}.Release|x64.ActiveCfg = Release|Any CPU
 		{5935C976-E4F8-D63C-9FF4-E7D3D1D898F8}.Release|x64.Build.0 = Release|Any CPU
+		{A6C77C0A-D3B5-416E-BC1D-C663D246FB30}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A6C77C0A-D3B5-416E-BC1D-C663D246FB30}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A6C77C0A-D3B5-416E-BC1D-C663D246FB30}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{A6C77C0A-D3B5-416E-BC1D-C663D246FB30}.Debug|x64.Build.0 = Debug|Any CPU
+		{A6C77C0A-D3B5-416E-BC1D-C663D246FB30}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A6C77C0A-D3B5-416E-BC1D-C663D246FB30}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A6C77C0A-D3B5-416E-BC1D-C663D246FB30}.Release|x64.ActiveCfg = Release|Any CPU
+		{A6C77C0A-D3B5-416E-BC1D-C663D246FB30}.Release|x64.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

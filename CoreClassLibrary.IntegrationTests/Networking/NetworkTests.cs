@@ -10,7 +10,7 @@ using CoreClassLibrary.Threading;
 using System.Net;
 using Xunit;
 
-namespace CoreClassLibrary.Tests.Networking;
+namespace CoreClassLibrary.IntegrationTests.Networking;
 
 public class NetworkTests(ITestOutputHelper outputHelper)
     {

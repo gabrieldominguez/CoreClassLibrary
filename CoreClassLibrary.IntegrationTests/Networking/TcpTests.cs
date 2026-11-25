@@ -11,7 +11,7 @@ using System.Net;
 using System.Net.Sockets;
 using Xunit;
 
-namespace CoreClassLibrary.Tests.Networking;
+namespace CoreClassLibrary.IntegrationTests.Networking;
 
 public class TcpTests(ITestOutputHelper outputHelper)
 {

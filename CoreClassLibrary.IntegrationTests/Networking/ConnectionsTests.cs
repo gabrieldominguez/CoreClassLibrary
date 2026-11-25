@@ -4,7 +4,7 @@ using Xunit;
 using System.Net.Sockets;
 using System.Net.NetworkInformation;
 
-namespace CoreClassLibrary.Tests.Networking;
+namespace CoreClassLibrary.IntegrationTests.Networking;
 
 public class ConnectionsTests(ITestOutputHelper output)
     {

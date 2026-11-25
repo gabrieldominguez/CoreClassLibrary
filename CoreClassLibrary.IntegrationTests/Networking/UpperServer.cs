@@ -1,7 +1,6 @@
-
 using CoreClassLibrary.Networking;
 
-namespace CoreClassLibrary.Tests.Networking;
+namespace CoreClassLibrary.IntegrationTests.Networking;
 
 public class UpperServer(RequestResponseStringServer server)
     {

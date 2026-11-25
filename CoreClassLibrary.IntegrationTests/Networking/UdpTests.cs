@@ -8,9 +8,8 @@ using CoreClassLibrary.Objects.Pooling;
 using CoreClassLibrary.Objects.Ranges;
 using System.Net;
 using System.Net.Sockets;
-using Xunit;
 
-namespace CoreClassLibrary.Tests.Networking;
+namespace CoreClassLibrary.IntegrationTests.Networking;
 
 public class UdpTests(ITestOutputHelper outputHelper)
 {
