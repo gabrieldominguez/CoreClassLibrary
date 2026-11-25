@@ -69,15 +69,15 @@ public class AsyncResponseMessageBus
     /// </remarks>
     /// <example>
     /// <![CDATA[
-    ///        MessagingResponseService.Unregister<IDeudaViewModel>();
+    ///        MessagingResponseService.Unsubscribe<IDeudaViewModel>();
     /// ]]>
     /// </example>
-    public void Unregister<T>() => this.Unregister(typeof(T).FullName ?? typeof(T).Name);
+    public void Unsubscribe<T>() => this.Unsubscribe(typeof(T).FullName ?? typeof(T).Name);
 
     /// <summary>
     /// Desregistra un mensaje.
     /// </summary>
-    public void Unregister(string messageName) => funcs.TryRemove(messageName);
+    public void Unsubscribe(string messageName) => funcs.TryRemove(messageName);
 
     /// <summary>
     /// Envía un mensaje a todos los detinatarios registrados.
@@ -117,7 +117,7 @@ public class AsyncResponseMessageBus
             }
             else
             {
-                this.Unregister(messageName);
+                this.Unsubscribe(messageName);
             }
         }
 

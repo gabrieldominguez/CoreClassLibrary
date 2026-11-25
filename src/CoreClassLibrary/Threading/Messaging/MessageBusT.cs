@@ -8,12 +8,12 @@ namespace CoreClassLibrary.Threading.Messaging;
 /// </summary>
 /// <example>
 /// <![CDATA[
-///        messagingService<IDeudaViewModel>.Subscribe("TarjetaActivaDeuda", this.Initialize);
+///        messageBus<IDeudaViewModel>.Subscribe("TarjetaActivaDeuda", this.Initialize);
 ///        ...
-///        messagingService<IDeudaViewModel>.Publish("TarjetaActivaDeuda", cuentaViewModel);
+///        messageBus<IDeudaViewModel>.Publish("TarjetaActivaDeuda", cuentaViewModel);
 /// ]]>
 /// </example>
-public class MessagingService<T>
+public class MessageBus<T>
 {
     private readonly List<WeakMethodReference> actions = [];
 
@@ -28,13 +28,13 @@ public class MessagingService<T>
     /// </remarks>
     /// <example>
     /// <![CDATA[
-    ///        messagingService<IDeudaViewModel>.Subscribe(this.Initialize);
+    ///        messageBus<IDeudaViewModel>.Subscribe(this.Initialize);
     /// ]]>
     /// </example>
     public void Subscribe(Action<T> action) => actions.AddUnique(new WeakAction<T>(action));
     #endregion
 
-    #region Unregister
+    #region Unsubscribe
     /// <summary>
     /// Desregistra un método.
     /// </summary>
@@ -44,10 +44,10 @@ public class MessagingService<T>
     /// </remarks>
     /// <example>
     /// <![CDATA[
-    ///        messagingService.Unregister<IDeudaViewModel>(this.Initialize);
+    ///        messageBus.Unsubscribe<IDeudaViewModel>(this.Initialize);
     /// ]]>
     /// </example>
-    public void Unregister(Action<T> action) => actions.Remove(new WeakAction<T>(action));
+    public void Unsubscribe(Action<T> action) => actions.Remove(new WeakAction<T>(action));
     #endregion
 
     #region Publish
@@ -57,7 +57,7 @@ public class MessagingService<T>
     /// <param name="message">Mensaje a enviar.</param>
     /// <example>
     /// <![CDATA[
-    ///        messagingService<IDeudaViewModel>.Publish(cuentaViewModel);
+    ///        messageBus<IDeudaViewModel>.Publish(cuentaViewModel);
     /// ]]>
     /// </example>
     public void Publish(T message)

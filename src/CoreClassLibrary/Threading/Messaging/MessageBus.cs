@@ -16,9 +16,9 @@ namespace CoreClassLibrary.Threading.Messaging;
 /// </remarks>
 /// <example>
 /// <![CDATA[
-///        messagingService.Subscribe<IDeudaViewModel>("TarjetaActivaDeuda", this.Initialize);
+///        messageBus.Subscribe<IDeudaViewModel>("TarjetaActivaDeuda", this.Initialize);
 ///        ...
-///        messagingService.Publish<IDeudaViewModel>("TarjetaActivaDeuda", cuentaViewModel);
+///        messageBus.Publish<IDeudaViewModel>("TarjetaActivaDeuda", cuentaViewModel);
 /// ]]>
 /// </example>
 /// <see cref="https://github.com/jbogard/MediatR"/>
@@ -41,7 +41,7 @@ public class MessageBus
     /// </remarks>
     /// <example>
     /// <![CDATA[
-    ///        messagingService.Subscribe<IDeudaViewModel>(this.Initialize);
+    ///        messageBus.Subscribe<IDeudaViewModel>(this.Initialize);
     /// ]]>
     /// </example>
     public void Subscribe<T>(Action<T> action) => this.Subscribe(typeof(T).FullName ?? typeof(T).Name, action);
@@ -58,7 +58,7 @@ public class MessageBus
     /// </remarks>
     /// <example>
     /// <![CDATA[
-    ///        messagingService.Subscribe<IDeudaViewModel>("TarjetaActivaDeuda", this.Initialize);
+    ///        messageBus.Subscribe<IDeudaViewModel>("TarjetaActivaDeuda", this.Initialize);
     /// ]]>
     /// </example>
     public void Subscribe<T>(string messageName, Action<T> action) => actions.GetOrAdd(messageName, key => new List<WeakMethodReference>()).AddUnique(new WeakAction<T>(action));
@@ -71,10 +71,10 @@ public class MessageBus
     /// </remarks>
     /// <example>
     /// <![CDATA[
-    ///        messagingService.Unregister<IDeudaViewModel>(this.Initialize);
+    ///        messageBus.Unsubscribe<IDeudaViewModel>(this.Initialize);
     /// ]]>
     /// </example>
-    public void Unregister<T>(Action<T> action) => this.Unregister(typeof(T).FullName ?? typeof(T).Name, action);
+    public void Unsubscribe<T>(Action<T> action) => this.Unsubscribe(typeof(T).FullName ?? typeof(T).Name, action);
 
     /// <summary>
     /// Desregistra un método.
@@ -88,10 +88,10 @@ public class MessageBus
     /// </remarks>
     /// <example>
     /// <![CDATA[
-    ///        messagingService.Unregister<IDeudaViewModel>("TarjetaActivaDeuda", this.Initialize);
+    ///        messageBus.Unsubscribe<IDeudaViewModel>("TarjetaActivaDeuda", this.Initialize);
     /// ]]>
     /// </example>
-    public void Unregister<T>(string messageName, Action<T> action)
+    public void Unsubscribe<T>(string messageName, Action<T> action)
     {
         if (actions.TryGetValue(messageName, out List<WeakMethodReference>? weakMethods))
         {
@@ -99,7 +99,7 @@ public class MessageBus
 
             if (weakMethods.Count == 0)
             {
-                this.Unregister(messageName);
+                this.Unsubscribe(messageName);
             }
         }
     }
@@ -107,7 +107,7 @@ public class MessageBus
     /// <summary>
     /// Desregistra un mensaje.
     /// </summary>
-    public void Unregister(string messageName) => actions.TryRemove(messageName);
+    public void Unsubscribe(string messageName) => actions.TryRemove(messageName);
 
     /// <summary>
     /// Envía un mensaje a todos los detinatarios registrados.
@@ -118,7 +118,7 @@ public class MessageBus
     /// </remarks>
     /// <example>
     /// <![CDATA[
-    ///        messagingService.Publish<IDeudaViewModel>(cuentaViewModel);
+    ///        messageBus.Publish<IDeudaViewModel>(cuentaViewModel);
     /// ]]>
     /// </example>
     public void Publish<T>(T message) => this.Publish(typeof(T).FullName ?? typeof(T).Name, message);
@@ -133,7 +133,7 @@ public class MessageBus
     /// </remarks>
     /// <example>
     /// <![CDATA[
-    ///        messagingService.Publish<IDeudaViewModel>("TarjetaActivaDeuda", cuentaViewModel);
+    ///        messageBus.Publish<IDeudaViewModel>("TarjetaActivaDeuda", cuentaViewModel);
     /// ]]>
     /// </example>
     public void Publish<T>(string messageName, T message)
@@ -159,7 +159,7 @@ public class MessageBus
 
                 if (weakMethods.Count == 0)
                 {
-                    this.Unregister(messageName);
+                    this.Unsubscribe(messageName);
                 }
             }
         }
