@@ -4,7 +4,7 @@ using CoreClassLibrary.Extensions;
 using CoreClassLibrary.Objects.WeakMethods;
 using System.Collections.Concurrent;
 
-namespace CoreClassLibrary.Objects.MessagingServices;
+namespace CoreClassLibrary.Threading.Messaging;
 
 /// <summary>
 /// Permite enviar mensajes entre objetos.
@@ -16,17 +16,17 @@ namespace CoreClassLibrary.Objects.MessagingServices;
 /// </remarks>
 /// <example>
 /// <![CDATA[
-///        messagingService.Register<IDeudaViewModel>("TarjetaActivaDeuda", this.Initialize);
+///        messagingService.Subscribe<IDeudaViewModel>("TarjetaActivaDeuda", this.Initialize);
 ///        ...
-///        messagingService.Send<IDeudaViewModel>("TarjetaActivaDeuda", cuentaViewModel);
+///        messagingService.Publish<IDeudaViewModel>("TarjetaActivaDeuda", cuentaViewModel);
 /// ]]>
 /// </example>
 /// <see cref="https://github.com/jbogard/MediatR"/>
-public class AsyncMessagingService
+public class AsyncMessageBus
 {
-    private static readonly Lazy<AsyncMessagingService> instance = new Lazy<AsyncMessagingService>();
+    private static readonly Lazy<AsyncMessageBus> instance = new Lazy<AsyncMessageBus>();
 
-    public static AsyncMessagingService Instance => instance.Value;
+    public static AsyncMessageBus Instance => instance.Value;
 
     private readonly ConcurrentDictionary<string, List<WeakMethodReference>> actions = [];
 
@@ -41,10 +41,10 @@ public class AsyncMessagingService
     /// </remarks>
     /// <example>
     /// <![CDATA[
-    ///        messagingService.Register<IDeudaViewModel>(this.Initialize);
+    ///        messagingService.Subscribe<IDeudaViewModel>(this.Initialize);
     /// ]]>
     /// </example>
-    public void Register<T>(Func<T, CancellationToken, Task> action) => this.Register(typeof(T).FullName ?? typeof(T).Name, action);
+    public void Subscribe<T>(Func<T, CancellationToken, Task> action) => this.Subscribe(typeof(T).FullName ?? typeof(T).Name, action);
 
     /// <summary>
     /// Registra un método para recibir mensajes.
@@ -58,10 +58,10 @@ public class AsyncMessagingService
     /// </remarks>
     /// <example>
     /// <![CDATA[
-    ///        messagingService.Register<IDeudaViewModel>("TarjetaActivaDeuda", this.Initialize);
+    ///        messagingService.Subscribe<IDeudaViewModel>("TarjetaActivaDeuda", this.Initialize);
     /// ]]>
     /// </example>
-    public void Register<T>(string messageName, Func<T, CancellationToken, Task> action) => actions.GetOrAdd(messageName, key => new List<WeakMethodReference>()).AddUnique(new WeakFunc<T, CancellationToken, Task>(action));
+    public void Subscribe<T>(string messageName, Func<T, CancellationToken, Task> action) => actions.GetOrAdd(messageName, key => new List<WeakMethodReference>()).AddUnique(new WeakFunc<T, CancellationToken, Task>(action));
 
     /// <summary>
     /// Desregistra un método.
@@ -118,10 +118,10 @@ public class AsyncMessagingService
     /// </remarks>
     /// <example>
     /// <![CDATA[
-    ///        messagingService.Send<IDeudaViewModel>(cuentaViewModel);
+    ///        messagingService.Publish<IDeudaViewModel>(cuentaViewModel);
     /// ]]>
     /// </example>
-    public Task SendAsync<T>(T message) => this.SendAsync(typeof(T).FullName ?? typeof(T).Name, message);
+    public Task PublishAsync<T>(T message) => this.PublishAsync(typeof(T).FullName ?? typeof(T).Name, message);
 
     /// <summary>
     /// Envía un mensaje a todos los detinatarios registrados.
@@ -133,10 +133,10 @@ public class AsyncMessagingService
     /// </remarks>
     /// <example>
     /// <![CDATA[
-    ///        messagingService.Send<IDeudaViewModel>("TarjetaActivaDeuda", cuentaViewModel);
+    ///        messagingService.Publish<IDeudaViewModel>("TarjetaActivaDeuda", cuentaViewModel);
     /// ]]>
     /// </example>
-    public async Task SendAsync<T>(string messageName, T message, CancellationToken cancellationToken = default)
+    public async Task PublishAsync<T>(string messageName, T message, CancellationToken cancellationToken = default)
     {
         if (actions.TryGetValue(messageName, out List<WeakMethodReference>? weakMethods))
         {

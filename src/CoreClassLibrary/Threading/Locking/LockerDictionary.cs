@@ -1,6 +1,6 @@
 using System.Collections.Concurrent;
 
-namespace CoreClassLibrary.Objects.Locking;
+namespace CoreClassLibrary.Threading.Locking;
 
 /// <summary>
 /// Diccionario de objetos para blockear por id bloques de codigo asincronicos.

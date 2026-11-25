@@ -2,7 +2,7 @@ using System.Collections.Concurrent;
 using CoreClassLibrary.Extensions;
 using CoreClassLibrary.Objects.WeakMethods;
 
-namespace CoreClassLibrary.Objects.MessagingServices;
+namespace CoreClassLibrary.Threading.Messaging;
 
 /// <summary>
 /// Permite enviar mensajes entre objetos.
@@ -14,17 +14,17 @@ namespace CoreClassLibrary.Objects.MessagingServices;
 /// </remarks>
 /// <example>
 /// <![CDATA[
-///        MessagingResponseService.Register<IDeudaViewModel>("TarjetaActivaDeuda", this.Initialize);
+///        MessagingResponseService.Subscribe<IDeudaViewModel>("TarjetaActivaDeuda", this.Initialize);
 ///        ...
-///        MessagingResponseService.Send<IDeudaViewModel>("TarjetaActivaDeuda", cuentaViewModel);
+///        MessagingResponseService.Publish<IDeudaViewModel>("TarjetaActivaDeuda", cuentaViewModel);
 /// ]]>
 /// </example>
 /// <see cref="https://github.com/jbogard/MediatR"/>
-public class ResponseMessagingService
+public class AsyncResponseMessageBus
 {
-    private static readonly Lazy<ResponseMessagingService> instance = new Lazy<ResponseMessagingService>();
+    private static readonly Lazy<AsyncResponseMessageBus> instance = new Lazy<AsyncResponseMessageBus>();
 
-    public static ResponseMessagingService Instance => instance.Value;
+    public static AsyncResponseMessageBus Instance => instance.Value;
 
     private readonly ConcurrentDictionary<string, WeakMethodReference> funcs = [];
 
@@ -39,10 +39,10 @@ public class ResponseMessagingService
     /// </remarks>
     /// <example>
     /// <![CDATA[
-    ///        MessagingResponseService.Register<IDeudaViewModel>(this.Initialize);
+    ///        MessagingResponseService.Subscribe<IDeudaViewModel>(this.Initialize);
     /// ]]>
     /// </example>
-    public void Register<T, TResult>(Func<T, TResult> func) => this.Register(typeof(T).FullName ?? typeof(T).Name, func);
+    public void Subscribe<T, TResult>(Func<T, CancellationToken, Task<TResult>> func) => this.Subscribe(typeof(T).FullName ?? typeof(T).Name, func);
 
     /// <summary>
     /// Registra un método para recibir mensajes.
@@ -56,10 +56,10 @@ public class ResponseMessagingService
     /// </remarks>
     /// <example>
     /// <![CDATA[
-    ///        MessagingResponseService.Register<IDeudaViewModel>("TarjetaActivaDeuda", this.Initialize);
+    ///        MessagingResponseService.Subscribe<IDeudaViewModel>("TarjetaActivaDeuda", this.Initialize);
     /// ]]>
     /// </example>
-    public void Register<T, TResult>(string messageName, Func<T, TResult> func) => funcs.GetOrAdd(messageName, key => new WeakFunc<T, TResult>(func));
+    public void Subscribe<T, TResult>(string messageName, Func<T, CancellationToken, Task<TResult>> func) => funcs.GetOrAdd(messageName, key => new WeakFunc<T, CancellationToken, Task<TResult>>(func));
 
     /// <summary>
     /// Desregistra un método.
@@ -88,11 +88,11 @@ public class ResponseMessagingService
     /// </remarks>
     /// <example>
     /// <![CDATA[
-    ///        MessagingResponseService.Send<IDeudaViewModel>(cuentaViewModel);
+    ///        MessagingResponseService.Publish<IDeudaViewModel>(cuentaViewModel);
     /// ]]>
     /// </example>
-    public TResult Send<T, TResult>(T message)
-        => Send<T, TResult>(typeof(T).FullName ?? typeof(T).Name, message);
+    public Task<TResult> PublishAsync<T, TResult>(T message)
+        => this.PublishAsync<T, TResult>(typeof(T).FullName ?? typeof(T).Name, message);
 
     /// <summary>
     /// Envía un mensaje a todos los detinatarios registrados.
@@ -104,16 +104,16 @@ public class ResponseMessagingService
     /// </remarks>
     /// <example>
     /// <![CDATA[
-    ///        Response response = MessagingResponseService.Send<IDeudaViewModel, Response>("TarjetaActivaDeuda", cuentaViewModel);
+    ///        Response response = MessagingResponseService.Publish<IDeudaViewModel, Response>("TarjetaActivaDeuda", cuentaViewModel);
     /// ]]>
     /// </example>
-    public TResult Send<T, TResult>(string messageName, T message)
+    public Task<TResult> PublishAsync<T, TResult>(string messageName, T message, CancellationToken cancellationToken = default)
     {
         if (funcs.TryGetValue(messageName, out WeakMethodReference? weakMethod))
         {
             if (weakMethod.IsAlive)
             {
-                return ((WeakFunc<T, TResult>)weakMethod).Func(message);
+                return ((WeakFunc<T, CancellationToken, Task<TResult>>)weakMethod).Func(message, cancellationToken);
             }
             else
             {

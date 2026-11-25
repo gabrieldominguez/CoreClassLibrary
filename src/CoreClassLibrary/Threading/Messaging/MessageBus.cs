@@ -4,7 +4,7 @@ using System.Collections.Concurrent;
 using CoreClassLibrary.Extensions;
 using CoreClassLibrary.Objects.WeakMethods;
 
-namespace CoreClassLibrary.Objects.MessagingServices;
+namespace CoreClassLibrary.Threading.Messaging;
 
 /// <summary>
 /// Permite enviar mensajes entre objetos.
@@ -16,17 +16,17 @@ namespace CoreClassLibrary.Objects.MessagingServices;
 /// </remarks>
 /// <example>
 /// <![CDATA[
-///        messagingService.Register<IDeudaViewModel>("TarjetaActivaDeuda", this.Initialize);
+///        messagingService.Subscribe<IDeudaViewModel>("TarjetaActivaDeuda", this.Initialize);
 ///        ...
-///        messagingService.Send<IDeudaViewModel>("TarjetaActivaDeuda", cuentaViewModel);
+///        messagingService.Publish<IDeudaViewModel>("TarjetaActivaDeuda", cuentaViewModel);
 /// ]]>
 /// </example>
 /// <see cref="https://github.com/jbogard/MediatR"/>
-public class MessagingService
+public class MessageBus
 {
-    private static readonly Lazy<MessagingService> instance = new Lazy<MessagingService>();
+    private static readonly Lazy<MessageBus> instance = new Lazy<MessageBus>();
 
-    public static MessagingService Instance => instance.Value;
+    public static MessageBus Instance => instance.Value;
 
     private readonly ConcurrentDictionary<string, List<WeakMethodReference>> actions = [];
 
@@ -41,10 +41,10 @@ public class MessagingService
     /// </remarks>
     /// <example>
     /// <![CDATA[
-    ///        messagingService.Register<IDeudaViewModel>(this.Initialize);
+    ///        messagingService.Subscribe<IDeudaViewModel>(this.Initialize);
     /// ]]>
     /// </example>
-    public void Register<T>(Action<T> action) => this.Register(typeof(T).FullName ?? typeof(T).Name, action);
+    public void Subscribe<T>(Action<T> action) => this.Subscribe(typeof(T).FullName ?? typeof(T).Name, action);
 
     /// <summary>
     /// Registra un método para recibir mensajes.
@@ -58,10 +58,10 @@ public class MessagingService
     /// </remarks>
     /// <example>
     /// <![CDATA[
-    ///        messagingService.Register<IDeudaViewModel>("TarjetaActivaDeuda", this.Initialize);
+    ///        messagingService.Subscribe<IDeudaViewModel>("TarjetaActivaDeuda", this.Initialize);
     /// ]]>
     /// </example>
-    public void Register<T>(string messageName, Action<T> action) => actions.GetOrAdd(messageName, key => new List<WeakMethodReference>()).AddUnique(new WeakAction<T>(action));
+    public void Subscribe<T>(string messageName, Action<T> action) => actions.GetOrAdd(messageName, key => new List<WeakMethodReference>()).AddUnique(new WeakAction<T>(action));
 
     /// <summary>
     /// Desregistra un método.
@@ -118,10 +118,10 @@ public class MessagingService
     /// </remarks>
     /// <example>
     /// <![CDATA[
-    ///        messagingService.Send<IDeudaViewModel>(cuentaViewModel);
+    ///        messagingService.Publish<IDeudaViewModel>(cuentaViewModel);
     /// ]]>
     /// </example>
-    public void Send<T>(T message) => this.Send(typeof(T).FullName ?? typeof(T).Name, message);
+    public void Publish<T>(T message) => this.Publish(typeof(T).FullName ?? typeof(T).Name, message);
 
     /// <summary>
     /// Envía un mensaje a todos los detinatarios registrados.
@@ -133,10 +133,10 @@ public class MessagingService
     /// </remarks>
     /// <example>
     /// <![CDATA[
-    ///        messagingService.Send<IDeudaViewModel>("TarjetaActivaDeuda", cuentaViewModel);
+    ///        messagingService.Publish<IDeudaViewModel>("TarjetaActivaDeuda", cuentaViewModel);
     /// ]]>
     /// </example>
-    public void Send<T>(string messageName, T message)
+    public void Publish<T>(string messageName, T message)
     {
         if (actions.TryGetValue(messageName, out List<WeakMethodReference>? weakMethods))
         {

@@ -1,4 +1,5 @@
 using CoreClassLibrary.Threading.AsyncQueues;
+using CoreClassLibrary.Threading.Messaging;
 using System.Threading.Channels;
 using Xunit;
 
@@ -90,7 +91,7 @@ public class AsyncQueueTests
     [Fact]
     public async Task MessageBus_PublishAsync_DeliversToEverySubscriber()
         {
-        MessageBus<int> messageBus = new([]);
+        QueueMessageBus<int> messageBus = new QueueMessageBus<int>();
         IAsyncQueue<int> firstSubscriber = messageBus.Subscribe();
         IAsyncQueue<int> secondSubscriber = messageBus.Subscribe();
 
@@ -108,7 +109,7 @@ public class AsyncQueueTests
     [Fact]
     public async Task MessageBus_Complete_ClosesSubscribersAndRejectsFutureOperations()
         {
-        MessageBus<int> messageBus = new([]);
+        QueueMessageBus<int> messageBus = new QueueMessageBus<int>();
         IAsyncQueue<int> subscriber = messageBus.Subscribe();
 
         messageBus.Complete();
@@ -118,5 +119,35 @@ public class AsyncQueueTests
         await Assert.ThrowsAsync<ObjectDisposedException>(
             () => messageBus.PublishAsync(1, TestContext.Current.CancellationToken).AsTask());
         Assert.Throws<ObjectDisposedException>(() => messageBus.Subscribe());
+        }
+
+    [Fact]
+    public async Task MessageBusT_PublishAsync_RoutesMessagesByType()
+        {
+        QueueMessageBus messageBus = new QueueMessageBus();
+        IAsyncQueue<int> firstSubscriber = messageBus.Subscribe<int>();
+        IAsyncQueue<int> secondSubscriber = messageBus.Subscribe<int>();
+        IAsyncQueue<string> stringSubscriber = messageBus.Subscribe<string>();
+
+        await messageBus.PublishAsync(42, TestContext.Current.CancellationToken);
+        await messageBus.PublishAsync("hello", TestContext.Current.CancellationToken);
+
+        Assert.Equal(42, await firstSubscriber.DequeueAsync(TestContext.Current.CancellationToken));
+        Assert.Equal(42, await secondSubscriber.DequeueAsync(TestContext.Current.CancellationToken));
+        Assert.Equal("hello", await stringSubscriber.DequeueAsync(TestContext.Current.CancellationToken));
+        }
+
+    [Fact]
+    public async Task MessageBusT_Unsubscribe_CompletesQueueAndStopsDelivery()
+        {
+        QueueMessageBus messageBus = new QueueMessageBus();
+        IAsyncQueue<int> subscriber = messageBus.Subscribe<int>();
+
+        Assert.True(messageBus.Unsubscribe(subscriber));
+        Assert.False(messageBus.Unsubscribe(subscriber));
+        await messageBus.PublishAsync(42, TestContext.Current.CancellationToken);
+
+        await Assert.ThrowsAsync<ChannelClosedException>(
+            () => subscriber.DequeueAsync(TestContext.Current.CancellationToken).AsTask());
         }
     }

@@ -1,10 +1,13 @@
 #pragma warning disable IDE0305 // Simplify collection initialization
 
-namespace CoreClassLibrary.Threading.AsyncQueues;
+using CoreClassLibrary.Threading.AsyncQueues;
 
-public class MessageBus<T>(IList<IAsyncQueue<T>> subscribers)
+namespace CoreClassLibrary.Threading.Messaging;
+
+public class QueueMessageBus<T>
     {
     private readonly Lock gate = new Lock();
+    private readonly List<IAsyncQueue<T>> subscribers = [];
     private bool isCompleted;
 
     public IAsyncQueue<T> Subscribe()
@@ -59,7 +62,6 @@ public class MessageBus<T>(IList<IAsyncQueue<T>> subscribers)
 
     public void Complete(Exception? error = null)
         {
-        IAsyncQueue<T>[] subscribersSnapshot;
         lock (this.gate)
             {
             if (this.isCompleted)
@@ -68,13 +70,14 @@ public class MessageBus<T>(IList<IAsyncQueue<T>> subscribers)
                 }
 
             this.isCompleted = true;
-            subscribersSnapshot = subscribers.ToArray();
+
+            foreach (IAsyncQueue<T> subscriber in subscribers)
+                {
+                subscriber.Complete(error);
+                }
+
             subscribers.Clear();
             }
 
-        foreach (IAsyncQueue<T> subscriber in subscribersSnapshot)
-            {
-            subscriber.Complete(error);
-            }
         }
     }

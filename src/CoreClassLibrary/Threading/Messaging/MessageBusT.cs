@@ -1,23 +1,23 @@
 using CoreClassLibrary.Extensions;
 using CoreClassLibrary.Objects.WeakMethods;
 
-namespace CoreClassLibrary.Objects.MessagingServices;
+namespace CoreClassLibrary.Threading.Messaging;
 
 /// <summary>
 /// Permite enviar mensajes de un tipo especificado entre objetos.
 /// </summary>
 /// <example>
 /// <![CDATA[
-///        messagingService<IDeudaViewModel>.Register("TarjetaActivaDeuda", this.Initialize);
+///        messagingService<IDeudaViewModel>.Subscribe("TarjetaActivaDeuda", this.Initialize);
 ///        ...
-///        messagingService<IDeudaViewModel>.Send("TarjetaActivaDeuda", cuentaViewModel);
+///        messagingService<IDeudaViewModel>.Publish("TarjetaActivaDeuda", cuentaViewModel);
 /// ]]>
 /// </example>
 public class MessagingService<T>
 {
     private readonly List<WeakMethodReference> actions = [];
 
-    #region Register
+    #region Subscribe
     /// <summary>
     /// Registra un método para recibir mensajes.
     /// </summary>
@@ -28,10 +28,10 @@ public class MessagingService<T>
     /// </remarks>
     /// <example>
     /// <![CDATA[
-    ///        messagingService<IDeudaViewModel>.Register(this.Initialize);
+    ///        messagingService<IDeudaViewModel>.Subscribe(this.Initialize);
     /// ]]>
     /// </example>
-    public void Register(Action<T> action) => actions.AddUnique(new WeakAction<T>(action));
+    public void Subscribe(Action<T> action) => actions.AddUnique(new WeakAction<T>(action));
     #endregion
 
     #region Unregister
@@ -50,17 +50,17 @@ public class MessagingService<T>
     public void Unregister(Action<T> action) => actions.Remove(new WeakAction<T>(action));
     #endregion
 
-    #region Send
+    #region Publish
     /// <summary>
     /// Envía un mensaje a todos los detinatarios registrados.
     /// </summary>
     /// <param name="message">Mensaje a enviar.</param>
     /// <example>
     /// <![CDATA[
-    ///        messagingService<IDeudaViewModel>.Send(cuentaViewModel);
+    ///        messagingService<IDeudaViewModel>.Publish(cuentaViewModel);
     /// ]]>
     /// </example>
-    public void Send(T message)
+    public void Publish(T message)
     {
         bool hasDeadMethods = false;
         foreach (WeakMethodReference weakMethod in actions)

@@ -1,4 +1,4 @@
-namespace CoreClassLibrary.Objects.Locking;
+namespace CoreClassLibrary.Threading.Locking;
 
 /// <summary>
 /// Encapsula un semaforo.

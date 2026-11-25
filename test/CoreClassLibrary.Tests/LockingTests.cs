@@ -1,6 +1,6 @@
 
 using CoreClassLibrary.Extensions;
-using CoreClassLibrary.Objects.Locking;
+using CoreClassLibrary.Threading.Locking;
 using Xunit;
 
 namespace CoreClassLibrary.Tests;
