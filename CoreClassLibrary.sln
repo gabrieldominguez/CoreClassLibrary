@@ -11,6 +11,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		.editorconfig = .editorconfig
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CoreClassLibrary.Mathematics", "src\CoreClassLibrary.Mathematics\CoreClassLibrary.Mathematics.csproj", "{F59BD36D-C64E-DDA1-91C3-83D5ED434ED4}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -35,6 +37,14 @@ Global
 		{6B3F32AA-7A1B-2E1D-AF91-FEC09F5C2E19}.Release|Any CPU.Build.0 = Release|Any CPU
 		{6B3F32AA-7A1B-2E1D-AF91-FEC09F5C2E19}.Release|x64.ActiveCfg = Release|Any CPU
 		{6B3F32AA-7A1B-2E1D-AF91-FEC09F5C2E19}.Release|x64.Build.0 = Release|Any CPU
+		{F59BD36D-C64E-DDA1-91C3-83D5ED434ED4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F59BD36D-C64E-DDA1-91C3-83D5ED434ED4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F59BD36D-C64E-DDA1-91C3-83D5ED434ED4}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{F59BD36D-C64E-DDA1-91C3-83D5ED434ED4}.Debug|x64.Build.0 = Debug|Any CPU
+		{F59BD36D-C64E-DDA1-91C3-83D5ED434ED4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F59BD36D-C64E-DDA1-91C3-83D5ED434ED4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F59BD36D-C64E-DDA1-91C3-83D5ED434ED4}.Release|x64.ActiveCfg = Release|Any CPU
+		{F59BD36D-C64E-DDA1-91C3-83D5ED434ED4}.Release|x64.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

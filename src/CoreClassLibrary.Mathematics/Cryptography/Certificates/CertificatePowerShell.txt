@@ -1,0 +1,130 @@
+TL;DR
+Current User Certificates: Get-ChildItem Cert:\CurrentUser\My
+Local Computer Certificates: Get-ChildItem Cert:\LocalMachine\My
+
+Display useful information:
+Get-ChildItem Cert:\LocalMachine\My | Select-Object Subject, Issuer, NotAfter, Thumbprint
+
+Find certificates by name:
+Get-ChildItem Cert:\ -Recurse | Where-Object { $_.Subject -like "*GitLab*" }
+
+-------------------------------------------------------------
+
+PowerShell has a built-in **Certificate provider** that lets you browse the certificate stores as if they were directories.
+
+### List all certificate stores
+
+```powershell
+Get-ChildItem Cert:\
+```
+
+Output:
+
+```
+Location   : CurrentUser
+StoreNames : {AddressBook, AuthRoot, CA, Disallowed, My, Root, ...}
+
+Location   : LocalMachine
+StoreNames : {AuthRoot, CA, My, Root, TrustedPeople, ...}
+```
+
+### List certificates in your Personal store
+
+Current user:
+
+```powershell
+Get-ChildItem Cert:\CurrentUser\My
+```
+
+Local machine:
+
+```powershell
+Get-ChildItem Cert:\LocalMachine\My
+```
+
+### List trusted root certificates
+
+```powershell
+Get-ChildItem Cert:\LocalMachine\Root
+```
+
+or for the current user:
+
+```powershell
+Get-ChildItem Cert:\CurrentUser\Root
+```
+
+### Display useful information
+
+```powershell
+Get-ChildItem Cert:\LocalMachine\Root |
+    Select-Object Subject, Issuer, NotAfter, Thumbprint
+```
+
+Example output:
+
+```
+Subject                             Issuer                              NotAfter              Thumbprint
+-------                             ------                              --------              ----------
+CN=Microsoft Root CA...             CN=Microsoft Root CA...             12/31/2035 12:00:00  A434...
+CN=DigiCert Global Root G2          CN=DigiCert Global Root G2          1/15/2038 12:00:00   DF3C...
+```
+
+### Find a certificate by name
+
+For example, to find certificates containing "GitLab":
+
+```powershell
+Get-ChildItem Cert:\ -Recurse |
+    Where-Object { $_.Subject -like "*GitLab*" }
+```
+
+Or by issuer:
+
+```powershell
+Get-ChildItem Cert:\ -Recurse |
+    Where-Object { $_.Issuer -like "*Let's Encrypt*" }
+```
+
+### Find certificates that are about to expire
+
+Within the next 30 days:
+
+```powershell
+Get-ChildItem Cert:\ -Recurse |
+    Where-Object { $_.NotAfter -lt (Get-Date).AddDays(30) } |
+    Select-Object Subject, NotAfter
+```
+
+### List all stores and their contents
+
+```powershell
+Get-ChildItem Cert:\ -Recurse |
+    Format-Table PSParentPath, Subject, NotAfter -AutoSize
+```
+
+---
+
+## Equivalent to `certlm.msc`
+
+If you want the same certificates shown in **`certlm.msc`** (Local Computer):
+
+```powershell
+Get-ChildItem Cert:\LocalMachine -Recurse
+```
+
+Or browse interactively:
+
+```powershell
+Set-Location Cert:\LocalMachine
+Get-ChildItem
+```
+
+You can navigate it like a filesystem:
+
+```powershell
+cd Cert:\LocalMachine\Root
+dir
+```
+
+This is especially useful for scripting certificate checks or verifying whether a specific root or intermediate certificate is installed.

@@ -1,0 +1,73 @@
+TL;DR
+Current User Certificates: Win+R + certmgr.msc
+Local Computer Certificates: Win+R + certlm.msc
+
+Choose between User, Computer, or Service certificate stores:
+Win+R + mmc + Add/Remove Snap-in
+
+-------------------------------------------------------------
+There are several ways to open the Windows Certificate Manager in Windows 11, depending on which certificate store you want to manage.
+
+### Option 1: Open the Current User Certificate Store (most common)
+
+1. Press **Win + R**.
+2. Type:
+
+   ```
+   certmgr.msc
+   ```
+3. Press **Enter**. This opens the **Certificates - Current User** console, where you can view and manage certificates for your user account. ([Microsoft Learn][1])
+
+### Option 2: Open the Local Computer Certificate Store
+
+If you need to manage system-wide certificates (requires administrator privileges):
+
+1. Press **Win + R**.
+2. Type:
+
+   ```
+   certlm.msc
+   ```
+3. Press **Enter**. This opens the **Certificates - Local Computer** store. ([GeekChamp][2])
+
+### Option 3: Use the Microsoft Management Console (MMC)
+
+This is useful if you want to choose which certificate store to manage.
+
+1. Press **Win + R**.
+2. Type:
+
+   ```
+   mmc
+   ```
+3. Press **Enter**.
+4. Go to **File → Add/Remove Snap-in...**
+5. Select **Certificates** and click **Add**.
+6. Choose one of:
+
+   * **My user account**
+   * **Service account**
+   * **Computer account**
+7. Click **Finish**, then **OK**. ([The Windows Club][3])
+
+### Option 4: Search from the Start Menu
+
+* Press **Start** and type:
+
+  * **Manage user certificates**, or
+  * **certmgr.msc**
+* Open the matching result. ([The Windows Club][3])
+
+### Which one should you use?
+
+| Task                                                          | Tool                         |
+| ------------------------------------------------------------- | ---------------------------- |
+| View your personal certificates                               | `certmgr.msc`                |
+| View machine-wide certificates (Trusted Root, Personal, etc.) | `certlm.msc`                 |
+| Choose between User, Computer, or Service certificate stores  | `mmc` + Certificates snap-in |
+
+If you're troubleshooting SSL, Git, Winget, or browser certificate issues (as in some of your previous Windows questions), you'll typically want to check the **Local Computer** store (`certlm.msc`), especially **Trusted Root Certification Authorities** and **Intermediate Certification Authorities**.
+
+[1]: https://learn.microsoft.com/en-us/dotnet/framework/tools/certmgr-exe-certificate-manager-tool?utm_source=chatgpt.com "Certmgr.exe (Certificate Manager Tool) - .NET Framework | Microsoft Learn"
+[2]: https://geekchamp.com/certmgr-msc-or-certificate-manager-in-windows-11/?utm_source=chatgpt.com "Certmgr.msc or Certificate Manager in Windows 11 - GeekChamp"
+[3]: https://www.thewindowsclub.com/certmgr-msc-certificate-manager-windows?utm_source=chatgpt.com "Certmgr.msc or Certificate Manager in Windows 11/10"
