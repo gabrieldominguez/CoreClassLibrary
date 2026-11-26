@@ -8,7 +8,6 @@ using CoreClassLibrary.Objects.Pooling;
 using CoreClassLibrary.Objects.Ranges;
 using CoreClassLibrary.Threading;
 using System.Net;
-using Xunit;
 
 namespace CoreClassLibrary.IntegrationTests.Networking;
 

@@ -9,7 +9,6 @@ using CoreClassLibrary.Objects.Refs;
 using System.Buffers;
 using System.Net;
 using System.Net.Sockets;
-using Xunit;
 
 namespace CoreClassLibrary.IntegrationTests.Networking;
 

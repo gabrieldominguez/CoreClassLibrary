@@ -3,7 +3,6 @@
 #pragma warning disable IDE0305 // Simplify collection initialization
 
 using CoreClassLibrary.Objects;
-using System.Reflection;
 using Xunit;
 
 namespace CoreClassLibrary.Tests.Reflection;

@@ -5,7 +5,7 @@ namespace CoreClassLibrary.Mathematics.Tests;
 
 public class RoundingTests
     {
-    public static TheoryData<decimal, decimal> RoundData => new()
+    public static TheoryData<decimal, decimal> RoundData => new TheoryData<decimal, decimal>()
         {
         { 0.50004M, 0.5000M },
         { 0.50005M, 0.5000M },
@@ -22,7 +22,7 @@ public class RoundingTests
         Assert.Equal(expected, Math.Round(d, 4));   // MidpointRounding.ToEven
         }
 
-    public static TheoryData<decimal, decimal> RoundAwayFromZeroData => new()
+    public static TheoryData<decimal, decimal> RoundAwayFromZeroData => new TheoryData<decimal, decimal>()
         {
         { 0.50004M, 0.5000M },
         { 0.50005M, 0.5001M },
@@ -39,7 +39,7 @@ public class RoundingTests
         Assert.Equal(expected, Math.Round(d, 4, MidpointRounding.AwayFromZero));
         }
 
-    public static TheoryData<decimal, int, MidpointRounding, decimal> DecimalRoundingData => new()
+    public static TheoryData<decimal, int, MidpointRounding, decimal> DecimalRoundingData => new TheoryData<decimal, int, MidpointRounding, decimal>()
         {
         { 3.45M, 1, MidpointRounding.ToEven, 3.4M },
         { 3.45M, 1, MidpointRounding.AwayFromZero, 3.5M },
@@ -56,7 +56,7 @@ public class RoundingTests
         Assert.Equal(expected, Math.Round(value, precision, mode));
         }
 
-    public static TheoryData<decimal, decimal, decimal> RoundRangeData => new()
+    public static TheoryData<decimal, decimal, decimal> RoundRangeData => new TheoryData<decimal, decimal, decimal>()
         {
         { 12.30M, 0.25M, 12.25M },
         { 12.40M, 0.25M, 12.50M },
@@ -74,7 +74,7 @@ public class RoundingTests
         Assert.Equal(expected, d.RoundRange(scale));   // MidpointRounding.ToEven
         }
 
-    public static TheoryData<decimal, decimal, decimal> TruncateRangeData => new()
+    public static TheoryData<decimal, decimal, decimal> TruncateRangeData => new TheoryData<decimal, decimal, decimal>()
         {
         { 12.30M, 0.25M, 12.25M },
         { 12.40M, 0.25M, 12.25M },
@@ -92,7 +92,7 @@ public class RoundingTests
         Assert.Equal(expected, d.TruncateRange(scale));   // MidpointRounding.ToEven
         }
 
-    public static TheoryData<decimal, int, decimal> TruncateData => new()
+    public static TheoryData<decimal, int, decimal> TruncateData => new TheoryData<decimal, int, decimal>()
         {
         { 12.35M, 0, 12M },
         { 12.35M, 1, 12.3M },

@@ -43,10 +43,22 @@ public static class DateTimeExtensions
 
     // https://en.wikipedia.org/wiki/Unix_time
     public static readonly DateTime UnixEpoch = new DateTime(1970, 1, 1, 0, 0, 0, 0);
+
     public static double ToUnixTime(this DateTime datetime)
-    => datetime.Subtract(DateTimeExtensions.UnixEpoch).TotalSeconds;
+        => datetime.Subtract(DateTimeExtensions.UnixEpoch).TotalSeconds;
+
     public static DateTime FromUnixTime(this double unixTime)
         => DateTimeExtensions.UnixEpoch.AddSeconds(unixTime);
+
+    public static readonly double UnixEpochJulianDay = 2440587.5;
+
+    /// <summary>
+    /// Returns the Julian day string for a date.
+    /// </summary>
+    /// <param name="dateTime">The date and time used to calculate the Julian day.</param>
+    /// <see cref="https://todayjuliandate.com/julian-day/"/>
+    public static double GetJulianDay(this DateTimeOffset dateTime)
+        => DateTimeExtensions.UnixEpochJulianDay + (dateTime.UtcTicks - DateTimeOffset.UnixEpoch.UtcTicks) / (double)TimeSpan.TicksPerDay;
 
     /// <summary>
     /// Returns a new System.DateTime that adds the specified number of working days to the value of this instance,

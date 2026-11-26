@@ -24,6 +24,20 @@ public static class DateExtensions
         => date.ToDateTime(TimeOnly.MinValue);
 
     /// <summary>
+    /// Returns the short Julian date for a date.
+    /// </summary>
+    /// <see cref="https://todayjuliandate.com"/>
+    public static string GetShortJulianDate(this DateOnly date)
+        => $"{date.Year % 100:00}{date.DayOfYear:000}";
+
+    /// <summary>
+    /// Returns the Julian date for a date.
+    /// </summary>
+    /// <see cref="https://todayjuliandate.com"/>
+    public static string GetJulianDate(this DateOnly date)
+        => $"{date.Year}{date.DayOfYear:000}";
+
+    /// <summary>
     /// Obtiene el rango de dias del mes.
     /// </summary>
     public static Range<DateOnly> GetMonthRange(this DateOnly date)

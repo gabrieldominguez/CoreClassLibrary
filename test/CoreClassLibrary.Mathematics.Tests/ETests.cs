@@ -13,6 +13,20 @@ public class ETests(ITestOutputHelper output)
     public void Exp() => this.AssertOutput(Math.Exp(1.0), 15);
 
     [Theory]
+    [InlineData(10, 0)]
+    [InlineData(100, 1)]
+    [InlineData(1_000, 2)]
+    [InlineData(10_000, 3)]
+    [InlineData(100_000, 4)]
+    [InlineData(1_000_000, 5)]
+    public void EulerNumberLimit(int n, int precision)
+        {
+        double e = Math.Pow(1.0 + 1.0 / n, n);
+
+        this.AssertOutput(e, precision);
+        }
+
+    [Theory]
     [InlineData(5, 1)]
     [InlineData(6, 2)]
     [InlineData(7, 3)]

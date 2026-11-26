@@ -1,6 +1,5 @@
 using CoreClassLibrary.Networking;
 using System.Net;
-using Xunit;
 using System.Net.Sockets;
 using System.Net.NetworkInformation;
 
