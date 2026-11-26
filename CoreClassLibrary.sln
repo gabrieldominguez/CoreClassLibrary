@@ -17,6 +17,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CoreClassLibrary.Mathematic
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CoreClassLibrary.IntegrationTests", "CoreClassLibrary.IntegrationTests\CoreClassLibrary.IntegrationTests.csproj", "{A6C77C0A-D3B5-416E-BC1D-C663D246FB30}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{58319E97-659E-4703-BBC7-28F9F65E9748}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{D12D77B3-7F11-4B48-8ACB-EE8455AE810B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -68,6 +72,13 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{BA26D456-9A55-406E-B76A-AA388DB069B0} = {D12D77B3-7F11-4B48-8ACB-EE8455AE810B}
+		{6B3F32AA-7A1B-2E1D-AF91-FEC09F5C2E19} = {58319E97-659E-4703-BBC7-28F9F65E9748}
+		{F59BD36D-C64E-DDA1-91C3-83D5ED434ED4} = {D12D77B3-7F11-4B48-8ACB-EE8455AE810B}
+		{5935C976-E4F8-D63C-9FF4-E7D3D1D898F8} = {58319E97-659E-4703-BBC7-28F9F65E9748}
+		{A6C77C0A-D3B5-416E-BC1D-C663D246FB30} = {58319E97-659E-4703-BBC7-28F9F65E9748}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {9667C132-1CBA-4ABE-B83A-CFEDB34C73D6}
