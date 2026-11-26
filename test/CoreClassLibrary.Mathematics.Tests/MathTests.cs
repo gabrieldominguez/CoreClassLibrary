@@ -41,6 +41,29 @@ public class MathTests(ITestOutputHelper output)
         Assert.True(Maths.AreEqual(Maths.Phi, phi, 0.000001) == equal);
         }
 
+    [Theory]
+    [InlineData(0, 0)]
+    [InlineData(1, 1)]
+    [InlineData(4, 2)]
+    [InlineData(9, 3)]
+    [InlineData(25, 5)]
+    [InlineData(100, 10)]
+    [InlineData(2, 1.4142135623730951)]
+    [InlineData(3, 1.7320508075688772)]
+    [InlineData(0.25, 0.5)]
+    [InlineData(0.01, 0.1)]
+    // https://www.youtube.com/shorts/cqphaodDkqg
+    public void ComputeSqrtHeron(double number, double expected)
+        {
+        double x = number;
+
+        while (Math.Abs(x * x - number) > 1e-10)
+            x = (x + number / x) / 2;
+
+        Assert.Equal(expected, x, 10);
+        Assert.Equal(Math.Sqrt(number), x, 10);
+        }
+
     [Fact]
     public void CordobaRatio()
         {
