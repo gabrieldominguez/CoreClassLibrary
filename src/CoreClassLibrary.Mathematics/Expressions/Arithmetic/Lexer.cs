@@ -13,8 +13,9 @@ public class Lexer(string input) :
         input, 
         new CompositeRule<Token>(
                 [
-                //new RegexRule<Token>(@"\s+", Token.SPACE),
-                new RegexRule<Token>(@"-?\d+(\.\d+)?", Token.NUMBER),
+                //new RegexRule<Token>(@"\s+", Token.SPACE),    // Space is filtered in the parser, not in the lexer.
+                //new RegexRule<Token>(@"-?\d+(\.\d+)?", Token.NUMBER), // Allow negative numbers in the lexer, but not in the parser. The parser will handle unary minus.
+                new RegexRule<Token>(@"\d+(\.\d+)?", Token.NUMBER),
                 new RegexRule<Token>(@"[A-Za-z]+", Token.PARAMETER),
                 new CompositeCharRule<Token>(
                     [

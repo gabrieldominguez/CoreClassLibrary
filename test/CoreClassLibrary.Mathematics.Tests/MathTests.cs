@@ -4,6 +4,13 @@ using Xunit;
 
 namespace CoreClassLibrary.Mathematics.Tests;
 
+/// <summary>
+/// Tests for mathematical operations and numerical algorithms.
+/// </summary>
+/// <remarks>
+/// “What I cannot create, I do not understand.” — Richard Feynman
+/// “I am a slow walker, but I never walk back.” — Abraham Lincoln
+/// </remarks>
 public class MathTests(ITestOutputHelper output)
     {
     [Theory]

@@ -12,10 +12,10 @@ namespace CoreClassLibrary.Mathematics.Expressions.Arithmetic;
 /// Grammar:
 /// expr   : term ((PLUS | MINUS) term)*
 /// term   : factor ((MUL | DIV) factor)*
-/// factor : INTEGER | LPAREN expr RPAREN
+/// factor : (PLUS | MINUS) factor | INTEGER | LPAREN expr RPAREN
 /// </remarks>
 /// <see cref="https://ruslanspivak.com/lsbasi-part1/"/>
-/// <see cref="https://ruslanspivak.com/lsbasi-part7/"/>
+/// <see cref="https://ruslanspivak.com/lsbasi-part8/"/>
 /// <see cref="https://dev.to/j0nimost/series/14710"/>
 public class ParseTreeBuilder(IEnumerator<LexerMatch<Token>> matchesEnumerator)
     {
@@ -46,6 +46,11 @@ public class ParseTreeBuilder(IEnumerator<LexerMatch<Token>> matchesEnumerator)
 
         switch (matchesEnumerator.Current.Match.Token)
             {
+            case Token.ADDITION:
+            case Token.SUBTRACTION:
+                this.AddCurrentMatch(node);
+                this.BuildFactor(node);
+                break;
             case Token.NUMBER:
             case Token.PARAMETER:
                 this.AddCurrentMatch(node);
