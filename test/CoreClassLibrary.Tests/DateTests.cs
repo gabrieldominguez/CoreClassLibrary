@@ -28,6 +28,7 @@ public class DateTests()
     public void IsLeapYear(int year, bool expected)
         {
         Assert.Equal(expected, year % 4 == 0 && (year % 100 != 0 || year % 400 == 0));
+        Assert.Equal(expected, (year % 4 == 0 && year % 100 != 0) || (year % 400 == 0));
         Assert.Equal(expected, DateTime.IsLeapYear(year));
         }
 

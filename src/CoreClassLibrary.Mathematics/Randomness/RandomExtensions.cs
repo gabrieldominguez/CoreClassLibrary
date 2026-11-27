@@ -294,6 +294,25 @@ public static class RandomExtensions
     public static int NextIndex<T>(this IRandom random, IReadOnlyCollection<T> list)
         => random.Next(list.Count);
 
+    public static int NextMinOfTwoIndex<T>(this IRandom random, IReadOnlyList<T> list) where T : IComparable<T>
+        => random.NextBestOfTwoIndex(list, (a, b) => a.CompareTo(b) <= 0);
+
+    /// <summary>
+    /// Selects the better of two randomly chosen list indexes.
+    /// </summary>
+    /// <typeparam name="T">The type of elements in the list.</typeparam>
+    /// <param name="random">The random number generator.</param>
+    /// <param name="list">The list from which two elements are selected.</param>
+    /// <param name="compare">The comparison function, must return true if the first element is better than the second.</param>
+    /// <returns>The index of the selected element.</returns>
+    /// <see cref="https://medium.com/the-intuition-project/load-balancing-the-intuition-behind-the-power-of-two-random-choices-6de2e139ac2f"/>
+    public static int NextBestOfTwoIndex<T>(this IRandom random, IReadOnlyList<T> list, Func<T, T, bool> compare)
+        {
+        int first = random.Next(list.Count);
+        int second = random.Next(list.Count);
+        return compare(list[first], list[second]) ? first : second;
+        }
+
     public static Range<int> NextRange(this IRandom random, Range<int> outerRange, int innerCount)
         {
         int start = random.Next(outerRange.Start, outerRange.End - innerCount + 2);

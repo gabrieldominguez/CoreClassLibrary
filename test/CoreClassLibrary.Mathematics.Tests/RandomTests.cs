@@ -2,16 +2,53 @@
 
 using CoreClassLibrary.Extensions;
 using CoreClassLibrary.Mathematics.Randomness;
-using CoreClassLibrary.RegularExpressions;
 using CoreClassLibrary.Objects.Pooling;
 using CoreClassLibrary.Objects.Ranges;
-using Xunit;
+using CoreClassLibrary.RegularExpressions;
 using CoreClassLibrary.Tests;
+using Xunit;
 
 namespace CoreClassLibrary.Mathematics.Tests;
 
 public class RandomTests(ITestOutputHelper output)
     {
+    [Theory]
+    [InlineData(10, 100)]
+    [InlineData(10, 1000)]
+    [InlineData(10, 10000)]
+    [InlineData(10, 100000)]
+    public void PowerOfTwoRandomChoices(int serverCount, int requestCount)
+        {
+        int[] randomLoads = new int[serverCount];
+        int[] powerOfTwoLoads = new int[serverCount];
+
+        for (int i = 0; i < requestCount; i++)
+            {
+            randomLoads[RandomWrapper.Shared.NextIndex(randomLoads)]++;
+            powerOfTwoLoads[RandomWrapper.Shared.NextMinOfTwoIndex(powerOfTwoLoads)]++;
+            }
+
+        int randomMinLoad = randomLoads.Min();
+        int randomMaxLoad = randomLoads.Max();
+        int powerOfTwoMinLoad = powerOfTwoLoads.Min();
+        int powerOfTwoMaxLoad = powerOfTwoLoads.Max();
+
+        output.WriteLine("Traditional Random load balancing");
+        output.WriteEnumerable(randomLoads);
+        output.WriteLine($"Min load: {randomMinLoad}");
+        output.WriteLine($"Max load: {randomMaxLoad}");
+        output.WriteLine($"Load difference: {randomMaxLoad - randomMinLoad}");
+        output.WriteLine("");
+        output.WriteLine("Power of Two Random Choices load balancing");
+        output.WriteEnumerable(powerOfTwoLoads);
+        output.WriteLine($"Min load: {powerOfTwoMinLoad}");
+        output.WriteLine($"Max load: {powerOfTwoMaxLoad}");
+        output.WriteLine($"Load difference: {powerOfTwoMaxLoad - powerOfTwoMinLoad}");
+
+        Assert.True(powerOfTwoMinLoad > randomMinLoad);
+        Assert.True(powerOfTwoMaxLoad < randomMaxLoad);
+        }
+
     [Fact]
     public void RNG()
         {
@@ -114,5 +151,54 @@ public class RandomTests(ITestOutputHelper output)
         float result = RandomWrapper.Shared.ChiSquareTest(1000, r);
         output.WriteLine(result.ToString());
         Assert.Equal(result, r, r * 0.25);
+        }
+
+    [Fact]
+    public void ShuffleArray()
+        {
+        int[] array = Enumerable.Range(0, 9).AsArray();
+
+        RandomWrapper.Shared.Shuffle<int>(array);
+
+        output.WriteEnumerable(array);
+        Assert.NotEqual(Enumerable.Range(0, 9).AsArray(), array);
+        }
+
+    [Fact]
+    public void ShuffleSpan()
+        {
+        int[] array = Enumerable.Range(0, 9).AsArray();
+        Span<int> span = array.AsSpan();
+
+        RandomWrapper.Shared.Shuffle<int>(span);
+
+        output.WriteEnumerable(array);
+        Assert.NotEqual(Enumerable.Range(0, 9).AsArray(), array);
+        }
+
+    [Fact]
+    public void ShuffleSpan2()
+        {
+        int[] array = Enumerable.Range(0, 9).AsArray();
+        Span<int> span = array.AsSpan();
+
+        RandomWrapper.Shared.Shuffle<int>(span);
+
+        output.WriteEnumerable(array);
+        Assert.False(array.IsOrdered());
+        }
+
+    [Fact]
+    public void IsAlphaNumeric()
+        {
+        Assert.True(RandomWrapper.Shared.NextAlphaNumericString(10).IsAlphaNumeric());
+        Assert.False(RandomWrapper.Shared.NextSymbolsString(10).IsAlphaNumeric());
+        }
+
+    [Fact]
+    public void ContainsSymbols()
+        {
+        Assert.True(RandomWrapper.Shared.NextSymbolsString(10).ContainsSymbols());
+        Assert.False(RandomWrapper.Shared.NextAlphaNumericString(10).ContainsSymbols());
         }
     }

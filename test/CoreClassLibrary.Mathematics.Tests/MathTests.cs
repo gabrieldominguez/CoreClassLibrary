@@ -57,8 +57,10 @@ public class MathTests(ITestOutputHelper output)
         {
         double x = number;
 
-        while (Math.Abs(x * x - number) > 1e-10)
-            x = (x + number / x) / 2;
+        while (Math.Abs(Maths.Pow2(x) - number) > 1e-10)
+            {
+            x = (x + number / x) / 2.0;
+            }
 
         Assert.Equal(expected, x, 10);
         Assert.Equal(Math.Sqrt(number), x, 10);
