@@ -295,7 +295,10 @@ public static class RandomExtensions
         => random.Next(list.Count);
 
     public static int NextMinOfTwoIndex<T>(this IRandom random, IReadOnlyList<T> list) where T : IComparable<T>
-        => random.NextBestOfTwoIndex(list, (a, b) => a.CompareTo(b) <= 0);
+        => random.NextBestOfTwoIndex(list, (a, b) => a.CompareTo(b) < 0);
+
+    public static int NextMaxOfTwoIndex<T>(this IRandom random, IReadOnlyList<T> list) where T : IComparable<T>
+        => random.NextBestOfTwoIndex(list, (a, b) => a.CompareTo(b) > 0);
 
     /// <summary>
     /// Selects the better of two randomly chosen list indexes.
