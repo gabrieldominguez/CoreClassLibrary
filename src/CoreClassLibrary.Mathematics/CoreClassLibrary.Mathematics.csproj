@@ -11,8 +11,4 @@
     <ProjectReference Include="..\CoreClassLibrary\CoreClassLibrary.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Expressions\Boolean\" />
-  </ItemGroup>
-
 </Project>
